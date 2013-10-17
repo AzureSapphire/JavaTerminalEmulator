@@ -12,20 +12,12 @@ public class JavaTerminalEmulator {
       setupGUI();
    }
    
-   /* This will eventually take parameters for color and whatnot */
+   /* This will eventually take parameters for color and whatnot*/
    public void setupGUI() throws BadLocationException, FileNotFoundException, IOException  { 
       te = new TerminalEmulator();
       
-      /* Sets the swing look and feel to that of the system one. */
-      try {
-         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-      } catch(Exception e) {
-         /* Nothing. Should just use the default look and feel if an error occurs. */
-      }
-
-        
       frame = new JFrame("Java Terminal Emulator"); /* For now. */
-      frame.setSize(TerminalEmulator.WIDTH, TerminalEmulator.HEIGHT);
+      frame.setSize(te.WIDTH, te.HEIGHT);
       frame.setResizable(false);
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       frame.add(te);
