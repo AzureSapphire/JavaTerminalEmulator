@@ -1,9 +1,6 @@
 import java.util.*;
 import java.io.*;
 
-/* For testing only */
-import javax.swing.*;
-
 public class JTE_FileIO extends FileIO {
    
    public JTE_FileIO() throws FileNotFoundException, IOException {
