@@ -5,18 +5,20 @@
 import javax.swing.*;
 import javax.swing.text.*;
 import java.awt.*;
+import java.awt.event.*;
 import java.io.*;
 import java.util.*;
 
 public class TerminalEmulator extends JPanel {
    
    protected JTextPane textPane;
+   protected JTextField textField;
    protected boolean run = true;
    protected JTE_FileIO f;
    protected StyledDocument doc;
    
-   public final int HEIGHT = 300;
-   public final int WIDTH = 500;
+   public static final int HEIGHT = 300;
+   public static final int WIDTH = 500;
    
    public TerminalEmulator() throws BadLocationException, FileNotFoundException, IOException {
       setup();
@@ -27,9 +29,22 @@ public class TerminalEmulator extends JPanel {
    
    public void setup() throws BadLocationException, FileNotFoundException, IOException {    
        textPane = new JTextPane();
-       textPane.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-       add(textPane);
-       doc = textPane.getStyledDocument();
+       textPane.setPreferredSize(new Dimension(TerminalEmulator.WIDTH, TerminalEmulator.HEIGHT));
+       textPane.setEditable(false);
+       textField = new JTextField();
+       
+       textField.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent e) {
+            /* TODO: print to system.in */
+            textField.setText(""); /* Sets the textfield text to empty. */
+         }
+       });
+       
+       setLayout(new BorderLayout());
+       add(textPane, BorderLayout.NORTH);
+       add(textField, BorderLayout.SOUTH);
+       
+       doc = textPane.getStyledDocument(); /* So we can append to the end of the JTextPane. */
        f = new JTE_FileIO();
        
        /* Creates a new Thread handled by Swing to constantly read in from the file and display the output in the GUI. */
@@ -55,8 +70,8 @@ public class TerminalEmulator extends JPanel {
    
    /* This is only for testing, all of this will be actually done in the constructor of JavaTerminalEmulator. */
    public static void main(String[] args) {
-      JFrame frame = new JFrame("Title");
-      frame.setSize(500,500);
+      JFrame frame = new JFrame("Java Terminal Emulator");
+      frame.setSize(TerminalEmulator.HEIGHT, TerminalEmulator.WIDTH);
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       frame.setResizable(false);
       try {
